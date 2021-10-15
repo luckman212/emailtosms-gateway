@@ -38,8 +38,9 @@ exports.handler = async event => {
   if (validateSender(data.from)) {
     // parse the to number from the left-hand side of the email address
     let regexp = /(^.\d+[^@])/g;
-    let to = data.to.match(regexp)[0];
-    let body = `Subject: ${data.subject}\nMessage: ${data.text}`;
+    let env_to = JSON.parse(data.envelope).to[0];
+    let to = env_to.match(regexp)[0];
+    let body = `${data.subject} ${data.text}`;
 
     let message;
     
